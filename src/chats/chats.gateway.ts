@@ -45,6 +45,7 @@ export class ChatsGateway
       await this.socketModel.create({ id: socket.id, username });
     }
     socket.broadcast.emit('user_connected', username);
+    return username;
   }
 
   @SubscribeMessage('submit_chat')

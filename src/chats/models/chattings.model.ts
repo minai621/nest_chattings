@@ -1,6 +1,6 @@
-import { Schema, SchemaFactory, SchemaOptions, Prop } from '@nestjs/mongoose';
 import { IsNotEmpty, IsString } from 'class-validator';
-import { Types } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document, SchemaOptions, Types } from 'mongoose';
 import { Socket as SocketModel } from './socket.model';
 
 const options: SchemaOptions = {
@@ -12,13 +12,12 @@ const options: SchemaOptions = {
 export class Chatting extends Document {
   @Prop({
     type: {
-      _id: { Type: Types.ObjectId, required: true, ref: 'sockets' },
+      _id: { type: Types.ObjectId, required: true, ref: 'sockets' },
       id: { type: String },
       username: { type: String, required: true },
     },
   })
   @IsNotEmpty()
-  @IsString()
   user: SocketModel;
 
   @Prop({

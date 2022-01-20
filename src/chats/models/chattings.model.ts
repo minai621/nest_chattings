@@ -1,0 +1,32 @@
+import { Schema, SchemaFactory, SchemaOptions, Prop } from '@nestjs/mongoose';
+import { IsNotEmpty, IsString } from 'class-validator';
+import { Types } from 'mongoose';
+import { Socket as SocketModel } from './socket.model';
+
+const options: SchemaOptions = {
+  collection: 'chattings',
+  timestamps: true,
+};
+
+@Schema(options)
+export class Chatting extends Document {
+  @Prop({
+    type: {
+      _id: { Type: Types.ObjectId, required: true, ref: 'sockets' },
+      id: { type: String },
+      username: { type: String, required: true },
+    },
+  })
+  @IsNotEmpty()
+  @IsString()
+  user: SocketModel;
+
+  @Prop({
+    required: true,
+  })
+  @IsNotEmpty()
+  @IsString()
+  chat: string;
+}
+
+export const ChattingSchema = SchemaFactory.createForClass(Chatting);
